@@ -1,21 +1,21 @@
 // Вспомогательные функции
-function managerSuccessCheck(response, successText, failText) {
+function managerSuccessCheck(response, successText) {
   if (response.success) {
     ProfileWidget.showProfile(response.data);
     newManager.setMessage(false, successText);
   } else {
-    newManager.setMessage(true, failText);
+    newManager.setMessage(true, response.data);
   }
 }
 
-function widgetSuccessCheck(response, successText, failText) {
+function widgetSuccessCheck(response, successText) {
   if (response.success) {
     newWidget.clearTable();
     newWidget.fillTable(response.data);
     newManager.updateUsersList(response.data);
     newWidget.setMessage(false, successText);
   } else {
-    newWidget.setMessage(true, failText);
+    newWidget.setMessage(true, response.data);
   }
 }
 
@@ -54,21 +54,21 @@ const newManager = new MoneyManager();
 // пополнение баланса
 newManager.addMoneyCallback = (data) => {
   ApiConnector.addMoney(data, (response) => {
-    managerSuccessCheck(response, 'Вы успешно пополнили баланс!', 'Не удалось пополнить баланс :(');
+    managerSuccessCheck(response, 'Вы успешно пополнили баланс!');
   });
 }
 
 // конвертирование валюты
 newManager.conversionMoneyCallback = (data) => {
   ApiConnector.convertMoney(data, (response) => {
-    managerSuccessCheck(response, 'Баланс успешно конвертирован!', 'Не удалось конвертировать баланс :(');
+    managerSuccessCheck(response, 'Баланс успешно конвертирован!');
   });
 }
 
 // перевод валюты
 newManager.sendMoneyCallback = (data) => {
   ApiConnector.transferMoney(data, (response) => {
-    managerSuccessCheck(response, 'Вы успешно осуществили перевод!', 'Не удалось произвести перевод :(');
+    managerSuccessCheck(response, 'Вы успешно осуществили перевод!');
   });
 }
 
@@ -87,13 +87,13 @@ ApiConnector.getFavorites((response) => {
 // добавление пользователя в список избранных
 newWidget.addUserCallback = (data) => {
   ApiConnector.addUserToFavorites(data, (response) => {
-    widgetSuccessCheck(response, 'Вы успешно добавили пользователя!', 'Не удалось добавить пользователя :(');
+    widgetSuccessCheck(response, 'Вы успешно добавили пользователя!');
   });
 }
 
 // удаление пользователя из избранного
 newWidget.removeUserCallback = (id) => {
   ApiConnector.removeUserFromFavorites(id, (response) => {
-    widgetSuccessCheck(response, 'Вы успешно удалили пользователя!', 'Не удалось удалить пользователя :(');
+    widgetSuccessCheck(response, 'Вы успешно удалили пользователя!');
   });
 }

@@ -6,7 +6,7 @@ userFormObj.loginFormCallback = (data) => {
     if (response.success) {
       location.reload();
     } else {
-      userFormObj.setLoginErrorMessage('Ошибка авторизации!');
+      userFormObj.setLoginErrorMessage(response.data);
     }
   });
 }
@@ -15,7 +15,7 @@ userFormObj.registerFormCallback = (data) => {
     if (response.success) {
       location.reload();
     } else {
-      userFormObj.setRegisterErrorMessage('Ошибка регистрации!');
+      userFormObj.setRegisterErrorMessage(response.data);
     }
   });
 }
